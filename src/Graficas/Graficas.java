@@ -34,39 +34,52 @@ public class Graficas extends JFrame{
     private XYDataset dataset;
     private XYPlot plot;
     private NumberAxis xAxis;
+    
+    //Constructor
     public Graficas(String title){
         super(title);
-
-        // Create dataset
-        dataset = createDataset();
-
-        // Create chart
-        chart = ChartFactory.createScatterPlot(
-                "Peso para la talla de niños (0 a 2 años)",
-                "X-Longitu (cm)", "Y-Peso (kg)", dataset);
+    }
     
-        //Changes background color
-        plot = (XYPlot) chart.getPlot();
+    //Crear nuevo chart
+    public void createChart(String titulo, String titulo_x, String titulo_y){
+        dataset = createDataset();
         
+        chart = ChartFactory.createScatterPlot(
+                titulo,
+                titulo_x, 
+                titulo_y, 
+                dataset);
+        
+        plot = (XYPlot) chart.getPlot();
+    }
+    
+    //actualizar rango en x
+    public void changeRangeX(double limiteInitial, double limiteFinal, double space){
         //rango eje x
         xAxis = (NumberAxis) plot.getDomainAxis();
-        xAxis.setRange(45, 110);//agrego el raango en el eje de las x
-        xAxis.setTickUnit(new NumberTickUnit(5));//agrego el espacio entre cada rango
-        
+        xAxis.setRange(limiteInitial, limiteFinal);//agrego el raango en el eje de las x
+        xAxis.setTickUnit(new NumberTickUnit(space));//agrego el espacio entre cada rango
+    }
+    
+    //actualizar rango en y
+    public void changeRangeY(double limiteInitial, double limiteFinal){
         //rango eje y
-        plot.getRangeAxis().setRange(0, 26);
-        
+        plot.getRangeAxis().setRange(limiteInitial, limiteFinal);
+    }
+    
+    //agregar imagen al plot
+    public void addImagePlot(String path, Color color_fondo_chart, Color color_fondo_plot){
         try {
-            String path = getClass().getClassLoader().getResource(".").getPath();
+            String path_project = getClass().getClassLoader().getResource(".").getPath();
             
-            File file = new File(path + "/img/0-2.png");
+            File file = new File(path_project + path);
             BufferedImage image = ImageIO.read(file);
             //chart.setBackgroundImage(image);
-            chart.setBackgroundPaint(new Color(51,204,255));
+            chart.setBackgroundPaint(color_fondo_chart);
             
             //color del fondo
             //plot.setBackgroundPaint(new Color(255, 228, 196));
-            plot.setBackgroundPaint(Color.WHITE);
+            plot.setBackgroundPaint(color_fondo_plot);
             
             //agregar imagen de fondo
             plot.setBackgroundImage(image);
@@ -74,8 +87,9 @@ public class Graficas extends JFrame{
         } catch (IOException e) {
             System.out.println("Error al abrir el archivo " +e.getMessage());
         }
-        
-        // Create Panel
+    }
+    
+    public void createPanel(){
         ChartPanel panel = new ChartPanel(chart);
         setContentPane(panel);
     }

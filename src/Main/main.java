@@ -25,6 +25,12 @@ public class main {
         //private static int UNITS = 5;
         SwingUtilities.invokeLater(()->{
             Graficas example = new Graficas("GRAFICAS DE LOS PATRONES DE CRECIMIENTO OMS PARA NIÑAS, NIÑOS Y ADOLESCENTES MENORES DE 18 AÑOS.");
+            example.createChart("Peso para la talla de niños (0 a 2 años)", "Longitu (cm)", "Peso (kg)");
+            example.changeRangeX(45, 110, 5);
+            example.changeRangeY(0, 26);
+            example.addImagePlot("/img/0-2.png", new Color(51,204,255), Color.WHITE);
+            example.createPanel();
+            
             example.setSize(800, 700);
             example.setLocationRelativeTo(null);
             example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

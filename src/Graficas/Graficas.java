@@ -34,6 +34,7 @@ public class Graficas extends JFrame{
     private XYDataset dataset;
     private XYPlot plot;
     private NumberAxis xAxis;
+    private NumberAxis yaxis;
     
     //Constructor
     public Graficas(String title){
@@ -41,8 +42,21 @@ public class Graficas extends JFrame{
     }
     
     //Crear nuevo chart
-    public void createChart(String titulo, String titulo_x, String titulo_y){
-        dataset = createDataset();
+    public void createChart(String titulo, String tituloX, String tituloY){
+        //dataset = createDataset();
+        
+        chart = ChartFactory.createScatterPlot(
+                titulo,
+                tituloX, 
+                tituloY, 
+                null);
+        
+        plot = (XYPlot) chart.getPlot();
+    }
+    
+    //crear nuevo chart con dataset
+    public void createChart(String titulo, String titulo_x, String titulo_y, XYSeries series[]){
+        dataset = createDataset(series);
         
         chart = ChartFactory.createScatterPlot(
                 titulo,
@@ -57,14 +71,17 @@ public class Graficas extends JFrame{
     public void changeRangeX(double limiteInitial, double limiteFinal, double space){
         //rango eje x
         xAxis = (NumberAxis) plot.getDomainAxis();
-        xAxis.setRange(limiteInitial, limiteFinal);//agrego el raango en el eje de las x
+        xAxis.setRange(limiteInitial, limiteFinal);//agrego el rango en el eje de las x
         xAxis.setTickUnit(new NumberTickUnit(space));//agrego el espacio entre cada rango
     }
     
     //actualizar rango en y
-    public void changeRangeY(double limiteInitial, double limiteFinal){
+    public void changeRangeY(double limiteInitial, double limiteFinal, double space){
         //rango eje y
-        plot.getRangeAxis().setRange(limiteInitial, limiteFinal);
+        //plot.getRangeAxis().setRange(limiteInitial, limiteFinal);
+        yaxis = (NumberAxis) plot.getRangeAxis();
+        yaxis.setRange(limiteInitial, limiteFinal);//agrego el rango en el eje de las y
+        yaxis.setTickUnit(new NumberTickUnit(space));//agrego el espacio entre cada rango
     }
     
     //agregar imagen al plot
@@ -94,11 +111,11 @@ public class Graficas extends JFrame{
         setContentPane(panel);
     }
 
-    public XYDataset createDataset() {
+    public XYDataset createDataset(XYSeries[] series) {
         XYSeriesCollection dataset = new XYSeriesCollection();
 
         //Boys (Age,weight) series
-        XYSeries series1 = new XYSeries("Boys");
+        /*XYSeries series1 = new XYSeries("Boys");
         //series.add(x, y)
         series1.add(50, 3);
         series1.add(55, 4);
@@ -111,9 +128,23 @@ public class Graficas extends JFrame{
         series1.add(90, 16);
         series1.add(96, 17);
 
-        dataset.addSeries(series1);
+        dataset.addSeries(series1);*/
+        //dataset.addSeries(series);
+        for (int i = 0; i < series.length; i++) {
+            dataset.addSeries(series[i]);
+        }
 
         return dataset;
+    }
+    
+    public XYSeries series(String titulo, double[][] seriesXY){
+        XYSeries datos = new XYSeries(titulo);
+        
+        for (int j = 0; j < seriesXY.length ; j++) {
+            datos.add(seriesXY[j][0], seriesXY[j][1]);
+        }
+        
+        return datos;
     }
 
     public JFreeChart getChart() {
@@ -139,6 +170,23 @@ public class Graficas extends JFrame{
     public void setPlot(XYPlot plot) {
         this.plot = plot;
     }
+
+    public NumberAxis getxAxis() {
+        return xAxis;
+    }
+
+    public void setxAxis(NumberAxis xAxis) {
+        this.xAxis = xAxis;
+    }
+
+    public NumberAxis getYaxis() {
+        return yaxis;
+    }
+
+    public void setYaxis(NumberAxis yaxis) {
+        this.yaxis = yaxis;
+    }
     
-  
+    
+    
 }

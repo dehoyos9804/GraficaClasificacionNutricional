@@ -59,7 +59,7 @@ public class main {
             series[0] = example.series("paciente", XYBoys);
             //series[1] = example.series("girls", XYGirls);
             
-            //creo la nueva grafica
+            //creo la nueva gráfica
             example.createChart("Peso para la talla de niños (0 a 2 años)", "Longitud (cm)", "Peso (kg)", series);
             example.changeRangeX(45, 110, 5);
             example.changeRangeY(0, 26, 1);

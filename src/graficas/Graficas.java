@@ -55,13 +55,13 @@ public class Graficas extends JFrame{
     }
     
     //crear nuevo chart con dataset
-    public void createChart(String titulo, String titulo_x, String titulo_y, XYSeries series[]){
+    public void createChart(String titulo, String tituloX, String tituloY, XYSeries series[]){
         dataset = createDataset(series);
         
         chart = ChartFactory.createScatterPlot(
                 titulo,
-                titulo_x, 
-                titulo_y, 
+                tituloX, 
+                tituloY, 
                 dataset);
         
         plot = (XYPlot) chart.getPlot();

@@ -37,7 +37,7 @@ public class main {
                 {96, 17},
             };
             
-            /*double[][] XYGirls = {
+            double[][] XYGirls = {
                 {50, 4},
                 {55, 6},
                 {60, 8},
@@ -48,16 +48,16 @@ public class main {
                 {85, 15},
                 {90, 17},
                 {95, 16},
-            };*/
+            };
             
-            XYSeries series[] = new XYSeries[1];
+            XYSeries series[] = new XYSeries[2];
             
             //instanacio la nueva graafica
             Graficas example = new Graficas("GRAFICAS DE LOS PATRONES DE CRECIMIENTO OMS PARA NIÑAS, NIÑOS Y ADOLESCENTES MENORES DE 18 AÑOS.");
             
             //agrego mi nuevas series
             series[0] = example.series("paciente", XYBoys);
-            //series[1] = example.series("girls", XYGirls);
+            series[1] = example.series("girls", XYGirls);
             
             //creo la nueva gráfica
             example.createChart("Peso para la talla de niños (0 a 2 años)", "Longitud (cm)", "Peso (kg)", series);
@@ -66,7 +66,7 @@ public class main {
             example.addImagePlot("/img/0-2.png", new Color(51,204,255), Color.WHITE);
             example.createPanel();
             
-            example.setSize(800, 700);
+            example.setSize(800, 600);
             example.setLocationRelativeTo(null);//centrar panel
             example.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             example.setVisible(true);
